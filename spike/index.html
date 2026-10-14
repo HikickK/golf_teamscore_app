@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="検証">
+  <meta name="theme-color" content="#1a6b3a">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icon-180.png">
+  <title>PWA 実機検証</title>
+  <style>
+    :root { --bg:#f4f6f4; --fg:#1b1f1c; --card:#fff; --accent:#1a6b3a; --line:#d5dbd6; --ng:#b3261e; }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg:#141714; --fg:#e8ece9; --card:#1e231f; --accent:#4cc27e; --line:#34403a; --ng:#ff8a80; }
+    }
+    * { box-sizing: border-box; }
+    body { margin:0; padding:16px; padding-bottom:48px; background:var(--bg); color:var(--fg);
+      font:16px/1.6 -apple-system, "Hiragino Sans", sans-serif; }
+    h1 { font-size:20px; margin:0 0 4px; }
+    h2 { font-size:17px; margin:0 0 8px; }
+    .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:14px; margin:14px 0; }
+    button, .btn, input[type=text] { font:inherit; min-height:44px; border-radius:10px; border:1px solid var(--line); padding:0 14px; }
+    button, .btn { background:var(--accent); color:#fff; border:0; margin:4px 6px 4px 0; display:inline-flex; align-items:center; }
+    button.sub { background:transparent; color:var(--fg); border:1px solid var(--line); }
+    input[type=text] { width:100%; background:var(--bg); color:var(--fg); margin:6px 0; }
+    input[type=file] { margin:8px 0; max-width:100%; }
+    dl { margin:0; display:grid; grid-template-columns:auto 1fr; gap:2px 12px; font-size:14px; }
+    dt { color:var(--accent); font-weight:600; }
+    dd { margin:0; word-break:break-all; }
+    pre, #log { font-size:13px; white-space:pre-wrap; word-break:break-all; margin:6px 0 0; }
+    #log div { border-top:1px solid var(--line); padding:3px 0; }
+    img { max-width:100%; border:1px solid var(--line); border-radius:8px; margin-top:8px; }
+    small { color:var(--accent); }
+    .warn { color:var(--ng); font-weight:600; }
+  </style>
+</head>
+<body>
+  <h1>PWA 実機検証ページ</h1>
+  <small>v1 ／ 検証のための一時ページです（検証後に削除します）</small>
+
+  <div class="card">
+    <h2>まず確認</h2>
+    <p id="mode-hint" class="warn"></p>
+    <dl id="env"></dl>
+  </div>
+
+  <div class="card">
+    <h2>V-1 / V-2 / V-3　オフライン起動とデータ保持</h2>
+    <p>メモを保存し、アプリを閉じて開き直したときに残るかを確認します。起動のたびに「起動回数」が増えます。</p>
+    <input id="note" type="text" placeholder="メモ（例: テスト1）" autocomplete="off">
+    <button id="save">保存</button>
+    <button id="clear" class="sub">削除</button>
+    <dl id="state"></dl>
+  </div>
+
+  <div class="card">
+    <h2>V-4　PNG 画像の保存</h2>
+    <p>① 画像を生成 → ② 共有（共有シートで「画像を保存」）。共有が使えない場合は、表示された画像を長押しして保存します。</p>
+    <button id="png-make">① 画像を生成</button>
+    <button id="png-share" class="sub">② 共有</button>
+    <div id="png-out"></div>
+  </div>
+
+  <div class="card">
+    <h2>V-5　JSON の書き出しと読み込み</h2>
+    <p>書き出し → 共有シートで「ファイルに保存」→ 下の選択欄からそのファイルを選んで読み込めるかを確認します。</p>
+    <button id="json-share">JSON を共有（書き出し）</button>
+    <button id="json-dl" class="sub">ダウンロード</button>
+    <div><input id="json-file" type="file" accept=".json,application/json"></div>
+    <pre id="json-out"></pre>
+  </div>
+
+  <div class="card">
+    <h2>ログ</h2>
+    <div id="log"></div>
+  </div>
+
+  <script src="spike.js"></script>
+</body>
+</html>
