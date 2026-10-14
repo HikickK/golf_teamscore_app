@@ -14,3 +14,7 @@ table.grid td.rk-reason { white-space: normal; font-size: 13px; color: var(--mut
 .rk-share-status { margin: 0; font-size: 14px; font-weight: 600; }
 .rk-textarea { width: 100%; box-sizing: border-box; font: inherit; }
 .rk-tiebreak { margin-top: 8px; }
+
+/* ---- 結果の画像 ---- */
+.rk-image-preview img { display: block; max-width: 100%; height: auto; border: 1px solid var(--line); border-radius: 8px; }
+.rk-image-preview:empty { display: none; }

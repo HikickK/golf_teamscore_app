@@ -2,6 +2,8 @@
 import { h } from './dom.js';
 import { rankTeams } from '../ranking.js';
 import { resultRows, resultText, tieBreakLabel } from '../share.js';
+import { resultPng } from '../result-image.js';
+import { shareFile } from './file-actions.js';
 
 // 状態ごとの「直す画面」への案内
 const FIX = {
@@ -28,6 +30,7 @@ export const screen = {
         ),
       );
       container.append(shareCard(ctx));
+      container.append(imageCard(ctx));
       container.append(tieBreakNote(competition));
       return;
     }
@@ -60,9 +63,67 @@ export const screen = {
     }
 
     container.append(shareCard(ctx));
+    container.append(imageCard(ctx));
     container.append(tieBreakNote(competition));
   },
 };
+
+// 結果の画像（PNG）。iOS はユーザー操作の直後でないと共有できないので、
+// ① 画像を作る（作ったものを表示）→ ② 共有・保存、の 2 段階にする
+function imageCard(ctx) {
+  const IMAGE_NAME = 'golf_teamscore_result.png';
+  let blob = null;
+  let previewUrl = null;
+
+  const status = h('p', { class: 'rk-share-status', role: 'status' });
+  const preview = h('div', { class: 'rk-image-preview' });
+  const say = (msg, isError = false) => {
+    status.textContent = msg;
+    status.className = 'rk-share-status' + (isError ? ' error-text' : '');
+  };
+
+  const shareBtn = h('button', { class: 'primary', type: 'button', disabled: true, onclick: onShare }, '② 共有・保存する');
+  const makeBtn = h('button', { type: 'button', onclick: onMake }, '① 画像を作る');
+
+  async function onMake() {
+    say('画像を作っています…');
+    shareBtn.disabled = true;
+    try {
+      const competition = ctx.state.competition;
+      blob = await resultPng(competition, rankTeams(competition));
+    } catch (e) {
+      // AC-39: 失敗したら理由を出し、テキストでの共有を案内する
+      blob = null;
+      preview.textContent = '';
+      say(`画像を作れませんでした（${e && e.message ? e.message : '原因不明'}）。上の「結果をテキストで共有」をお使いください。`, true);
+      return;
+    }
+    if (previewUrl) URL.revokeObjectURL(previewUrl);
+    previewUrl = URL.createObjectURL(blob);
+    preview.textContent = '';
+    preview.append(h('img', { src: previewUrl, alt: '順位表の画像' }));
+    shareBtn.disabled = false;
+    say('画像ができました。「② 共有・保存する」を押すか、画像を長押しして保存できます。');
+  }
+
+  // クリックの中で、時間のかかる処理を挟まずに共有を呼ぶ（blob は①で作成済み）
+  async function onShare() {
+    if (!blob) return;
+    const r = await shareFile({ filename: IMAGE_NAME, mime: 'image/png', content: blob });
+    if (r.ok && r.method === 'share') say('共有しました。');
+    else if (r.ok) say('画像をダウンロードしました。「ファイル」アプリのダウンロードを確認してください。');
+    else if (r.cancelled) say('');
+    else say('共有・保存できませんでした。画像を長押しして保存するか、テキストで共有してください。', true);
+  }
+
+  return h('div', { class: 'card stack' },
+    h('h3', {}, '結果を画像で保存・共有'),
+    h('p', { class: 'hint' }, '順位表を画像にして、写真アプリへの保存やメッセージでの共有ができます。'),
+    h('div', { class: 'row' }, makeBtn, shareBtn),
+    status,
+    preview,
+  );
+}
 
 function rankTable(rows, complete) {
   const tbody = h('tbody', {});
