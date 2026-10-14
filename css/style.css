@@ -120,6 +120,45 @@ input, select {
   max-width: 100%;
 }
 
+/* ---- 共通の部品（各画面で共有する）---- */
+
+/* 縦に並べる・横に並べる（折り返す） */
+.stack > * + * { margin-top: 12px; }
+.row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.row.between { justify-content: space-between; }
+.grow { flex: 1 1 0; min-width: 0; }
+
+/* 項目名つきの入力欄: <div class="field"><label>…</label><input>…<div class="error-text">…</div></div> */
+.field { display: flex; flex-direction: column; gap: 4px; }
+.field > label, .label { font-size: 14px; font-weight: 600; }
+.field input, .field select { width: 100%; }
+.field.is-invalid input, .field.is-invalid select { border-color: var(--ng); }
+.error-text { color: var(--ng); font-size: 14px; }
+.error-text:empty { display: none; }
+.hint { color: var(--muted); font-size: 13px; }
+
+/* 見出し付きのカード */
+.card > h3 { margin: 0 0 8px; font-size: 16px; }
+
+/* 状態を示す小さなラベル */
+.badge {
+  display: inline-block;
+  padding: 0 8px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  font-size: 13px;
+  line-height: 22px;
+  white-space: nowrap;
+}
+.badge.ok { color: var(--accent); border-color: var(--accent); }
+.badge.ng { color: var(--ng); border-color: var(--ng); }
+
+/* 表（.table-wrap の中に置く） */
+table.grid { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+table.grid th, table.grid td { padding: 6px 8px; border-bottom: 1px solid var(--line); text-align: center; white-space: nowrap; }
+table.grid th { font-size: 13px; color: var(--muted); font-weight: 600; }
+table.grid td.left, table.grid th.left { text-align: left; }
+
 /* ---- 下のタブバー ---- */
 .tabs {
   position: fixed;

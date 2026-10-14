@@ -23,7 +23,28 @@ function navigate(id) {
   else location.hash = id; // hashchange で描画される
 }
 
-const ctx = { state, navigate, rerender: () => renderAll() };
+// 画面に渡すもの
+//   state       : 状態。変更は state.commit() だけが入口
+//   ui          : 画面をまたいで覚えておく操作中の情報（保存はしない）。selectedTeamId = ③入力・④割当で選んでいるチーム
+//   navigate(id): 画面を切り替える
+//   rerender()  : 現在の画面を描き直す
+//   commitQuiet : state.commit と同じだが、画面全体の再描画をしない（保存・ヘッダー・お知らせだけ更新）。
+//                 入力欄のフォーカスを保ちたいとき（打鍵ごとの保存など）に使い、画面側で必要な部分だけ自分で更新する
+let quiet = false;
+const ctx = {
+  state,
+  ui: { selectedTeamId: null },
+  navigate,
+  rerender: () => renderAll(),
+  commitQuiet(mutator) {
+    quiet = true;
+    try {
+      return state.commit(mutator);
+    } finally {
+      quiet = false;
+    }
+  },
+};
 
 function renderTabs() {
   clear($tabs);
@@ -78,5 +99,12 @@ window.addEventListener('hashchange', () => {
   renderAll();
   window.scrollTo(0, 0);
 });
-state.subscribe(renderAll);
+state.subscribe(() => {
+  if (quiet) {
+    renderBanner();
+    renderStatus();
+  } else {
+    renderAll();
+  }
+});
 renderAll();
