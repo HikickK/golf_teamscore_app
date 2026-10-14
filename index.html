@@ -2,11 +2,25 @@
 <html lang="ja">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob:; style-src 'self'; script-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="theme-color" content="#1a6b3a">
   <title>団体戦スコア</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <h1>団体戦スコア（準備中）</h1>
-  <p>GitHub Pages の公開確認用ページです。（v0.0.1）</p>
+  <header class="app-header">
+    <h1 class="app-title">団体戦スコア</h1>
+    <span id="save-status" class="save-status" role="status"></span>
+  </header>
+
+  <div id="banner" class="banner" role="alert" hidden></div>
+
+  <main id="screen" class="screen" tabindex="-1"></main>
+
+  <nav id="tabs" class="tabs" aria-label="画面の切り替え"></nav>
+
+  <noscript><p class="banner">このアプリは JavaScript が必要です。</p></noscript>
+  <script type="module" src="js/main.js"></script>
 </body>
 </html>
