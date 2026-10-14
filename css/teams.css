@@ -1,1 +1,28 @@
 /* チーム画面の専用スタイル。共通の部品は style.css にある。ここには、この画面だけで使うクラスを書く */
+.team-card .t-head { align-items: flex-end; }
+.team-card .t-head .grow { flex: 1 1 160px; }
+.team-card .t-size { margin: 12px 0; }
+
+/* 同 HDCP の順序が未指定・重複: 色だけでなく枠線・太字・記号で目立たせる */
+.tie-warning {
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  border: 2px solid var(--ng);
+  border-radius: 10px;
+  background: var(--warn-bg);
+  font-weight: 600;
+}
+
+.players .player {
+  padding: 10px 0 0;
+  border-top: 1px solid var(--line);
+}
+.players .player:first-child { border-top: 0; padding-top: 0; }
+.player .t-line { margin-top: 8px; align-items: flex-end; }
+.player .t-hdcp { flex: 0 1 120px; }
+.player .t-tie { flex: 0 1 110px; }
+.player .t-quota { align-self: center; }
+.player .t-remove { margin-left: auto; }
+.teams-notice { margin-bottom: 12px; }
+.t-hint { margin: 12px 0 0; }
+.t-add-team { width: 100%; }

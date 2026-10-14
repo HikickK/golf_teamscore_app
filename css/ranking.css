@@ -1,1 +1,16 @@
 /* 順位画面の専用スタイル。共通の部品は style.css にある。ここには、この画面だけで使うクラスを書く */
+.rk-caption { caption-side: top; text-align: left; font-weight: 600; padding: 0 0 8px; }
+.rk-rank { min-width: 64px; }
+.rk-rank-num { font-size: 18px; font-weight: 700; }
+.rk-name { font-weight: 600; white-space: normal; word-break: break-all; }
+.rk-total { font-weight: 700; }
+.rk-has-reason td { border-bottom: 0; }
+table.grid td.rk-reason { white-space: normal; font-size: 13px; color: var(--muted); padding-top: 0; }
+.rk-provisional p { margin: 0; }
+.rk-pending { border-top: 1px solid var(--line); padding-top: 8px; }
+.rk-pending button { min-height: 44px; min-width: 44px; }
+.rk-share-btn { min-height: 44px; width: 100%; }
+.rk-share-status:empty { display: none; }
+.rk-share-status { margin: 0; font-size: 14px; font-weight: 600; }
+.rk-textarea { width: 100%; box-sizing: border-box; font: inherit; }
+.rk-tiebreak { margin-top: 8px; }

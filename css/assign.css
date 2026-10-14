@@ -1,1 +1,56 @@
 /* 割当画面の専用スタイル。共通の部品は style.css にある。ここには、この画面だけで使うクラスを書く */
+
+.assign-total { font-size: 16px; }
+.assign-total-num { font-size: 22px; }
+.assign-incomplete { margin: 0; font-size: 14px; font-weight: 600; color: var(--ng); }
+
+.assign-table { min-width: 100%; }
+.assign-table .assign-name { max-width: 7em; overflow: hidden; text-overflow: ellipsis; }
+
+/* 左端の列（ホール番号・行の名前）は横スクロールしても見えるように固定する */
+.assign-table .sticky-col {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: var(--card);
+  color: var(--fg);
+  box-shadow: 1px 0 0 var(--line);
+}
+
+/* 採用されたセル: 色に加え、● 記号・太字・枠線で示す */
+.assign-table td.assign-cell { min-width: 56px; padding: 0; height: 44px; }
+.assign-table td.assign-cell:not(:has(button)) { padding: 6px 8px; }
+.assign-table td.is-adopted {
+  font-weight: 700;
+  color: var(--accent);
+  background: var(--warn-bg);
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.assign-cell-btn {
+  display: block;
+  width: 100%;
+  min-width: 56px;
+  min-height: 44px;
+  padding: 0 6px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: inherit;
+  font-variant-numeric: tabular-nums;
+}
+
+.assign-table td.assign-adopted-col, .assign-table th.assign-adopted-col {
+  border-left: 2px solid var(--line);
+  font-weight: 700;
+}
+
+/* 小計・合計・採用数の行 */
+.assign-table tr.assign-sum th, .assign-table tr.assign-sum td { font-weight: 700; border-top: 2px solid var(--line); }
+.assign-table tr.assign-grand td { font-size: 17px; }
+
+.assign-count.is-over, .assign-count.is-under { color: var(--ng); background: var(--ng-bg); }
+.assign-count-mark { font-size: 12px; }

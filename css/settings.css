@@ -1,1 +1,24 @@
 /* 設定画面の専用スタイル。共通の部品は style.css にある。ここには、この画面だけで使うクラスを書く */
+.par-group { margin-top: 8px; }
+.par-group > .label { display: block; margin-bottom: 4px; }
+.par-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.par-cell { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.par-cell > label { font-size: 13px; font-weight: 600; }
+.par-cell input { width: 100%; min-width: 0; text-align: center; padding: 0 4px; }
+.par-cell.is-invalid input { border-color: var(--ng); border-width: 2px; }
+.par-cell .error-text { font-size: 12px; }
+
+.option-list { border: 0; margin: 0; padding: 0; min-width: 0; }
+.option-list > legend { padding: 0; font-weight: 600; margin-bottom: 4px; }
+.option { display: flex; align-items: flex-start; gap: 10px; min-height: 44px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 10px; cursor: pointer; }
+.option + .option { margin-top: 8px; }
+.option input { flex: none; width: 24px; min-height: 24px; height: 24px; margin: 2px 0 0; padding: 0; accent-color: var(--accent); }
+.option:has(input:checked) { border-color: var(--accent); border-width: 2px; padding: 7px 9px; font-weight: 600; }
+.option-body { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.option-desc { font-weight: 400; font-size: 13px; color: var(--muted); }
+
+.notice { padding: 10px 12px; border: 1px solid var(--accent); border-radius: 10px; font-weight: 600; }
+.notice.is-error { border-color: var(--ng); color: var(--ng); }
+.notice:empty { display: none; }
+.data-actions { display: flex; flex-direction: column; gap: 10px; }
+.data-actions button { width: 100%; }

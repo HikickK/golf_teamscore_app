@@ -1,1 +1,23 @@
 /* 入力画面の専用スタイル。共通の部品は style.css にある。ここには、この画面だけで使うクラスを書く */
+
+.input-progress { font-weight: 600; }
+.input-progress .progress-text { font-variant-numeric: tabular-nums; }
+
+.hole-head { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 6px; }
+.hole-head h3 { margin: 0; font-size: 18px; }
+.hole-mark { font-size: 13px; color: var(--muted); }
+.hole-mark.is-done { color: var(--accent); font-weight: 700; }
+
+.score-cell { padding: 4px 0; border-top: 1px solid var(--line); }
+.score-line { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.player-name { flex: 1 1 0; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.score-ctrl { display: flex; align-items: center; gap: 6px; flex: none; }
+.score-ctrl button.step { min-width: 48px; min-height: 48px; padding: 0; font-size: 22px; font-weight: 700; line-height: 1; }
+.score-ctrl button.step[aria-disabled="true"] { opacity: 0.4; cursor: default; }
+.score-input { width: 60px; min-width: 48px; min-height: 48px; padding: 0 4px; text-align: center; font-size: 20px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.score-input.is-invalid { border-color: var(--ng); border-width: 2px; }
+.score-cell .error-text { margin: 0 0 4px; }
+
+.sub-card h3 { margin: 0 0 8px; font-size: 16px; }
+.sub-card td.num { font-variant-numeric: tabular-nums; font-weight: 600; }
+.sub-card td.total { font-weight: 700; }
