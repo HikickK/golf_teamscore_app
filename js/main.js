@@ -3,6 +3,7 @@
 import { createState } from './state.js';
 import { SCREENS } from './ui/screens.js';
 import { h, clear } from './ui/dom.js';
+import { registerServiceWorker, applyUpdate } from './pwa.js';
 
 const state = createState();
 
@@ -94,6 +95,19 @@ function renderAll() {
   clear($screen);
   screen.render($screen, ctx);
 }
+
+// 新しい版の通知（画面の描き直しの影響を受けないよう、専用の欄に出す）
+const $update = document.getElementById('update-banner');
+function showUpdate(reg) {
+  clear($update);
+  $update.append(
+    h('span', {}, '新しい版があります。'),
+    ' ',
+    h('button', { type: 'button', class: 'primary', onclick: () => applyUpdate(reg) }, '更新する'),
+  );
+  $update.hidden = false;
+}
+registerServiceWorker({ onUpdateReady: showUpdate });
 
 window.addEventListener('hashchange', () => {
   renderAll();
