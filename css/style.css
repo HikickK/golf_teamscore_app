@@ -32,6 +32,11 @@
 
 html { -webkit-text-size-adjust: 100%; }
 
+/* 短い間隔で続けて押すと「ダブルタップで拡大」と判定されて操作が中断されるため、その拡大だけを止める。
+   ピンチでの拡大は残す（viewport に user-scalable=no は付けない）。
+   入力欄の文字は 16px 以上に保つこと（iOS はそれ未満だと、フォーカス時に自動で拡大する） */
+html, body, button, a, input, select, textarea, label, summary, [role="button"] { touch-action: manipulation; }
+
 body {
   margin: 0;
   background: var(--bg);
