@@ -3,7 +3,7 @@
 // 読み取っただけでは保存データを変えない。「取り込む」で初めて state.commit する。
 import { h } from './dom.js';
 import { HOLES } from '../model.js';
-import { buildPrompt, parseScoreText, matchPlayers, setCell, reviewImport, applyImport } from '../score-import.js';
+import { buildPrompt, buildDialoguePrompt, parseScoreText, matchPlayers, setCell, reviewImport, applyImport } from '../score-import.js';
 import {
   STATUS_TEXT, SKIP_VALUE, CHOOSE_VALUE, initialMapping, rowStatus, parseSelection, playerGroups, playerIdSet,
   normalizeInput, visibleIgnored, checkLine, applySummary, overwriteMessage,
@@ -78,8 +78,8 @@ function requestCard(ctx) {
   };
 
   // 文字列は同期的に作ってからコピーを呼ぶ（iOS はユーザー操作の直後でないと失敗するため）
-  const onCopy = () => {
-    const text = buildPrompt();
+  const onCopy = (build) => () => {
+    const text = build();
     area.textContent = '';
     say('');
     if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -101,9 +101,13 @@ function requestCard(ctx) {
     h('ol', { class: 'im-steps' },
       h('li', {}, 'スコアカードの写真を撮る'),
       h('li', {}, '下のボタンで依頼文をコピーし、写真と一緒に、使いたい AI アプリ（画像を読めるもの。どれでもよい）に渡す'),
-      h('li', {}, '返ってきた文章を全部コピーして、下の欄に貼り付ける'),
+      h('li', {}, '返ってきた文章（対話版では、最後に出る結果）を全部コピーして、下の欄に貼り付ける'),
     ),
-    h('button', { type: 'button', class: 'primary', id: 'import-copy', onclick: onCopy }, 'AI への依頼文をコピー'),
+    h('div', { class: 'im-copy-buttons' },
+      h('button', { type: 'button', class: 'primary', id: 'import-copy', onclick: onCopy(buildPrompt) }, 'AI への依頼文をコピー（そのまま読み取る）'),
+      h('button', { type: 'button', id: 'import-copy-dialogue', onclick: onCopy(buildDialoguePrompt) }, 'AI への依頼文をコピー（AI と確認しながら）'),
+    ),
+    h('p', { class: 'hint' }, '「そのまま読み取る」は 1 回で結果が出ます。「AI と確認しながら」は、読めなかった所や迷った所を、AI があなたに聞いてから結果を出します（時間はかかりますが、読み違いを減らせます）。'),
     status,
     area,
     h('p', { class: 'im-privacy', id: 'import-privacy' }, PRIVACY_NOTICE),

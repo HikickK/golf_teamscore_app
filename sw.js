@@ -4,7 +4,7 @@
 // アプリを更新して公開するたびに VERSION を変える（製品の版ではなく、端末の保存を入れ替えるための印。日付 + 連番: 20261015a → 20261015b → 20261016a）。
 // 古い保存は、新しい版が有効になったときに消える。
 // PRECACHE には app/ のファイルをすべて載せる（漏れると、そのファイルだけ圏外で読めなくなる。tests/pwa.test.js が漏れを検出する）。
-const VERSION = '20261015c';
+const VERSION = '20261015d';
 const CACHE_PREFIX = 'golf-teamscore-';
 const CACHE = `${CACHE_PREFIX}${VERSION}`;
 
