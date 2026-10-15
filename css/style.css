@@ -125,6 +125,19 @@ input, select {
   max-width: 100%;
 }
 
+/* 日付の入力欄: iPhone の Safari は、標準の見た目のままだと幅の指定が効かず、枠からはみ出す。
+   標準の見た目を外し、幅を親に合わせる（日付の選択画面は、これまでどおり開く） */
+input[type="date"] {
+  -webkit-appearance: none;
+  appearance: none;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  text-align: left;
+}
+input[type="date"]::-webkit-date-and-time-value { text-align: left; min-width: 0; }
+input[type="date"]::-webkit-datetime-edit { padding: 0; }
+
 /* ---- 共通の部品（各画面で共有する）---- */
 
 /* 縦に並べる・横に並べる（折り返す） */

@@ -49,6 +49,7 @@ const PRECACHE = [
   './js/ui/ranking-screen.js',
   './js/ui/data-screen.js',
   './js/ui/import-screen.js',
+  './js/ui/import-logic.js',
   './js/pwa.js',
 ];
 
