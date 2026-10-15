@@ -20,5 +20,3 @@
 .notice { padding: 10px 12px; border: 1px solid var(--accent); border-radius: 10px; font-weight: 600; }
 .notice.is-error { border-color: var(--ng); color: var(--ng); }
 .notice:empty { display: none; }
-.data-actions { display: flex; flex-direction: column; gap: 10px; }
-.data-actions button { width: 100%; }

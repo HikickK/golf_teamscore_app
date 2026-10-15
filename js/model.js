@@ -11,6 +11,7 @@ export const TEAM_SIZES = [3, 4];
 export const DIRECTIONS = ['lowHdcpMore', 'highHdcpMore'];
 export const TIE_BREAKS = ['back9', 'hdcpSum', 'scoreCounts'];
 export const ASSIGNMENT_MODES = ['auto', 'manual'];
+export const MODES = ['prep', 'day']; // 画面のモード（事前準備 / 当日）。Competition.mode は任意で、無ければ 'prep'
 
 export function createCompetition() {
   return {
@@ -20,6 +21,7 @@ export function createCompetition() {
     pars: Array(HOLES).fill(4),
     settings: { allocationDirection: 'lowHdcpMore', tieBreak: 'scoreCounts' },
     teams: [],
+    mode: 'prep',
     updatedAt: new Date().toISOString(),
   };
 }
@@ -72,6 +74,7 @@ export function validateCompetition(obj) {
   if (typeof obj.name !== 'string') err('name', 'コンペ名は文字列にしてください');
   if (typeof obj.date !== 'string' || (obj.date !== '' && !/^\d{4}-\d{2}-\d{2}$/.test(obj.date))) err('date', '開催日は YYYY-MM-DD 形式にしてください');
   if (typeof obj.updatedAt !== 'string') err('updatedAt', '更新日時が正しくありません');
+  if (obj.mode !== undefined && !MODES.includes(obj.mode)) err('mode', 'モードが正しくありません');
 
   if (!Array.isArray(obj.pars) || obj.pars.length !== HOLES) {
     err('pars', `パーは ${HOLES} ホール分が必要です`);

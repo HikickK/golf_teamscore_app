@@ -1,9 +1,10 @@
 'use strict';
 
 // Service Worker: アプリ一式を端末に保存し、圏外でも起動できるようにする。
-// アプリを更新したら VERSION を上げる（古い保存は新しい版が有効になったときに消える）。
+// アプリを更新して公開するたびに VERSION を変える（製品の版ではなく、端末の保存を入れ替えるための印。日付 + 連番: 20261015a → 20261015b → 20261016a）。
+// 古い保存は、新しい版が有効になったときに消える。
 // PRECACHE には app/ のファイルをすべて載せる（漏れると、そのファイルだけ圏外で読めなくなる。tests/pwa.test.js が漏れを検出する）。
-const VERSION = 'v1';
+const VERSION = '20261015a';
 const CACHE_PREFIX = 'golf-teamscore-';
 const CACHE = `${CACHE_PREFIX}${VERSION}`;
 
@@ -17,6 +18,8 @@ const PRECACHE = [
   './css/input.css',
   './css/assign.css',
   './css/ranking.css',
+  './css/data.css',
+  './css/import.css',
   './icons/icon-180.png',
   './icons/icon-192.png',
   './icons/icon-512.png',
@@ -27,6 +30,8 @@ const PRECACHE = [
   './js/quota.js',
   './js/assign.js',
   './js/ranking.js',
+  './js/mode.js',
+  './js/score-import.js',
   './js/storage.js',
   './js/share.js',
   './js/result-image.js',
@@ -42,6 +47,8 @@ const PRECACHE = [
   './js/ui/assign-screen.js',
   './js/ui/assign-logic.js',
   './js/ui/ranking-screen.js',
+  './js/ui/data-screen.js',
+  './js/ui/import-screen.js',
   './js/pwa.js',
 ];
 

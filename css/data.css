@@ -1,0 +1,24 @@
+/* データ画面と、ヘッダーのモード表示の専用スタイル。共通の部品は style.css にある */
+.notice { padding: 10px 12px; border: 1px solid var(--accent); border-radius: 10px; font-weight: 600; }
+.notice.is-error { border-color: var(--ng); color: var(--ng); }
+.notice:empty { display: none; }
+.data-actions { display: flex; flex-direction: column; gap: 10px; }
+.data-actions button { width: 100%; }
+
+/* ---- ヘッダーのモード表示・切り替え（main.js が作る） ---- */
+.app-header { flex-wrap: wrap; }
+.mode-bar { flex-basis: 100%; display: flex; align-items: center; gap: 10px; }
+.mode-bar .mode-label { font-weight: 700; padding: 4px 10px; border: 2px solid var(--accent); border-radius: 999px; white-space: nowrap; }
+.mode-bar button { min-height: 44px; margin-left: auto; }
+
+/* モードによってタブの数が変わる（3 または 5）ので、本数に関わらず均等に並べる */
+.tabs { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 1fr; }
+
+/* ---- 当日を始められないときの点検の表示 ---- */
+.mode-issues { margin: 0; padding: 10px calc(16px + env(safe-area-inset-right)) 10px calc(16px + env(safe-area-inset-left)); background: var(--warn-bg); border-bottom: 1px solid var(--line); font-size: 14px; }
+.mode-issues[hidden] { display: none; }
+.mode-issues h2 { margin: 0 0 6px; font-size: 15px; }
+.mode-issues ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.mode-issues li { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+.mode-issues li .issue-text::before { content: '✕ '; font-weight: 700; color: var(--ng); }
+.mode-issues button { min-height: 44px; }
