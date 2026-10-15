@@ -10,8 +10,8 @@ import {
 } from './import-logic.js';
 
 const PRIVACY_NOTICE =
-  '写真と氏名は、あなたが使う外部の AI に送られます。会社のルールに従って使ってください。このアプリは写真も氏名も送信しません。'
-  + '氏名を渡したくないときは、コピーした依頼文から選手名を消してください（その場合は、下の確認表で選手を選び直します）。';
+  '写真に写っている氏名は、あなたが使う外部の AI に送られます。会社のルールに従って使ってください。このアプリは写真も氏名も送信しません。'
+  + '依頼文には、このアプリに登録した選手名は入っていません。AI は写真のとおりに書き写すだけで、登録した選手との対応付けは、下の確認表で行います。';
 
 const NOT_FOUND_MSG = 'スコアの行が見つかりませんでした。形式を確認してください';
 const SAVE_FAILED_MSG = 'データを端末に保存できませんでした。貼り付けた内容は消していません。保存の状態（画面上部のお知らせ）を確認して、もう一度お試しください。';
@@ -79,7 +79,7 @@ function requestCard(ctx) {
 
   // 文字列は同期的に作ってからコピーを呼ぶ（iOS はユーザー操作の直後でないと失敗するため）
   const onCopy = () => {
-    const text = buildPrompt(ctx.state.competition);
+    const text = buildPrompt();
     area.textContent = '';
     say('');
     if (navigator.clipboard && navigator.clipboard.writeText) {
